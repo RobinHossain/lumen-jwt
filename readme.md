@@ -17,6 +17,7 @@ Basically this is a starter kit for you to integrate Lumen with [JWT Authenticat
 - Run `composer install`
 - Run `php artisan jwt:generate`
 - Configure your `.env` file for authenticating via database
+- Set the `API_PREFIX` parameter in your .env file (usually `api`).
 - Run `php artisan migrate --seed`
 
 ## A Live PoC
