@@ -17,11 +17,11 @@ class CORSMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $response = $next($request);
-
-        if ($this->isPreflightRequest($request)
-            && $this->canBeConvertedToPreflightResponse($response)) {
+        // TODO: Should check whether route has been registered
+        if ($this->isPreflightRequest($request)) {
             $response = $this->createEmptyResponse();
+        } else {
+            $response = $next($request);
         }
 
         return $this->addCorsHeaders($request, $response);
@@ -30,7 +30,7 @@ class CORSMiddleware
     /**
      * Determine if request is a preflight request.
      *
-     * @param \Illiminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return bool
      */
@@ -40,22 +40,9 @@ class CORSMiddleware
     }
 
     /**
-     * Determine if response is not an error.
-     *
-     * @param \Illiminate\Http\Response $response
-     *
-     * @return bool
-     */
-    protected function canBeConvertedToPreflightResponse($response)
-    {
-        return ($response->isSuccessful() || $response->isClientError())
-            && !$response->isNotFound();
-    }
-
-    /**
      * Create empty response for preflight request.
      *
-     * @return \Illiminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     protected function createEmptyResponse()
     {
@@ -65,8 +52,8 @@ class CORSMiddleware
     /**
      * Add CORS headers.
      *
-     * @param \Illiminate\Http\Request  $request
-     * @param \Illiminate\Http\Response $response
+     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Response $response
      */
     protected function addCorsHeaders($request, $response)
     {
