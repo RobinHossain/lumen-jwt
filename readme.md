@@ -17,6 +17,7 @@ Basically this is a starter kit for you to integrate Lumen with [JWT Authenticat
 - Run `composer install`
 - Run `php artisan jwt:generate`
 - Configure your `.env` file for authenticating via database
+- Set the `API_PREFIX` parameter in your .env file (usually `api`).
 - Run `php artisan migrate --seed`
 
 ## A Live PoC
@@ -33,7 +34,7 @@ Or via artisan command:
 php artisan serve
 ```
 
-To authenticate a user, make a `POST` request to `/auth/login` with parameter as mentioned below:
+To authenticate a user, make a `POST` request to `/api/auth/login` with parameter as mentioned below:
 
 ```
 email: johndoe@example.com
@@ -43,7 +44,7 @@ password: johndoe
 Request:
 
 ```sh
-curl -X POST -F "email=johndoe@example.com" -F "password=johndoe" "http://localhost:8000/auth/login"
+curl -X POST -F "email=johndoe@example.com" -F "password=johndoe" "http://localhost:8000/api/auth/login"
 ```
 
 Response:
@@ -57,12 +58,12 @@ Response:
 }
 ```
 
-- With token provided by above request, you can check authenticated user by sending a `GET` request to: `/auth/user`.
+- With token provided by above request, you can check authenticated user by sending a `GET` request to: `/api/auth/user`.
 
 Request:
 
 ```sh
-curl -X GET -H "Authorization: Bearer a_long_token_appears_here" "http://localhost:8000/auth/user"
+curl -X GET -H "Authorization: Bearer a_long_token_appears_here" "http://localhost:8000/api/auth/user"
 ```
 
 Response:
@@ -81,21 +82,21 @@ Response:
 }
 ```
 
-- To refresh your token, simply send a `PATCH` request to `/auth/refresh`.
-- Last but not least, you can also invalidate token by sending a `DELETE` request to `/auth/invalidate`.
+- To refresh your token, simply send a `PATCH` request to `/api/auth/refresh`.
+- Last but not least, you can also invalidate token by sending a `DELETE` request to `/api/auth/invalidate`.
 - To list all registered routes inside your application, you may execute `php artisan route:list`
 
 ```
 ⇒  php artisan route:list
-+--------+------------------+---------------------+------------------------------------------+------------------+------------+
-| Verb   | Path             | NamedRoute          | Controller                               | Action           | Middleware |
-+--------+------------------+---------------------+------------------------------------------+------------------+------------+
-| POST   | /auth/login      | api.auth.login      | App\Http\Controllers\Auth\AuthController | postLogin        |            |
-| GET    | /                | api.index           | App\Http\Controllers\APIController       | getIndex         | jwt.auth   |
-| GET    | /auth/user       | api.auth.user       | App\Http\Controllers\Auth\AuthController | getUser          | jwt.auth   |
-| PATCH  | /auth/refresh    | api.auth.refresh    | App\Http\Controllers\Auth\AuthController | patchRefresh     | jwt.auth   |
-| DELETE | /auth/invalidate | api.auth.invalidate | App\Http\Controllers\Auth\AuthController | deleteInvalidate | jwt.auth   |
-+--------+------------------+---------------------+------------------------------------------+------------------+------------+
++--------+----------------------+---------------------+------------------------------------------+------------------+------------+
+| Verb   | Path                 | NamedRoute          | Controller                               | Action           | Middleware |
++--------+----------------------+---------------------+------------------------------------------+------------------+------------+
+| POST   | /api/auth/login      | api.auth.login      | App\Http\Controllers\Auth\AuthController | postLogin        |            |
+| GET    | /api                 | api.index           | App\Http\Controllers\APIController       | getIndex         | jwt.auth   |
+| GET    | /api/auth/user       | api.auth.user       | App\Http\Controllers\Auth\AuthController | getUser          | jwt.auth   |
+| PATCH  | /api/auth/refresh    | api.auth.refresh    | App\Http\Controllers\Auth\AuthController | patchRefresh     | jwt.auth   |
+| DELETE | /api/auth/invalidate | api.auth.invalidate | App\Http\Controllers\Auth\AuthController | deleteInvalidate | jwt.auth   |
++--------+----------------------+---------------------+------------------------------------------+------------------+------------+
 ```
 
 ## Future
