@@ -126,11 +126,7 @@ $app->register(App\Providers\LumenJWTServiceProvider::class);
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 
 // Configure our JWT for Dingo
-$app->make(Dingo\Api\Auth\Auth::class)->extend('jwt', function ($app) {
-    return new Dingo\Api\Auth\Provider\JWT(
-        $app->make(Tymon\JWTAuth\JWTAuth::class)
-    );
-});
+$app->register(App\Providers\DingoJWTDriverServiceProvider::class);
 
 // Lumen Generator disabled it on production if you want
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
@@ -146,7 +142,7 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 |
 */
 
-$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
+$app->group(['namespace' => App\Http\Controllers::class], function ($app) {
     require $app->basePath('/routes/api.php');
 });
 
