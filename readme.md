@@ -1,14 +1,16 @@
 # Lumen with JWT Authentication
-
 Basically this is a starter kit for you to integrate Lumen with [JWT Authentication](https://jwt.io/).
+If you want to Lumen + Dingo + JWT for your current application, please check [here](https://github.com/krisanalfa/lumen-dingo-adapter).
 
 ## What's Added
 
 - [Lumen 5.3](https://github.com/laravel/lumen/tree/v5.3.0).
-- [JWT Auth](https://github.com/tymondesigns/jwt-auth) for Lumen Application.
-- [Dingo](https://github.com/dingo/api) to easily and quickly build your own API.
+- [JWT Auth](https://github.com/tymondesigns/jwt-auth) for Lumen Application. <sup>[1]</sup>
+- [Dingo](https://github.com/dingo/api) to easily and quickly build your own API. <sup>[1]</sup>
 - [Lumen Generator](https://github.com/flipboxstudio/lumen-generator) to make development even easier and faster.
 - [CORS and Preflight Request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) support.
+
+> [1] Added via [this package](https://packagist.org/packages/krisanalfa/lumen-dingo-adapter).
 
 ## Quick Start
 

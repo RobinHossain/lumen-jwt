@@ -119,14 +119,8 @@ $app->routeMiddleware([
 // $app->register(App\Providers\GuardServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
-// JWTAuth
-$app->register(App\Providers\LumenJWTServiceProvider::class);
-
-// Dingo
-$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
-
-// Configure our JWT for Dingo
-$app->register(App\Providers\DingoJWTDriverServiceProvider::class);
+// Dingo Adapter for Lumen
+$app->register(Zeek\LumenDingoAdapter\Providers\LumenDingoAdapterServiceProvider::class);
 
 // Lumen Generator disabled it on production if you want
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
