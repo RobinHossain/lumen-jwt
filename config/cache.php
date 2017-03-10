@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
+    'default' => env('CACHE_DRIVER', 'array'),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,6 +86,6 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', 'laravel'),
+    'prefix' => env('w3bd'),
 
 ];

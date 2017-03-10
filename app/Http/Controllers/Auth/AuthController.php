@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -42,6 +45,51 @@ class AuthController extends Controller
         // All good so return the token
         return $this->onAuthorized($token);
     }
+
+    /*
+     * For Registration User through API
+     */
+    public function postRegister(Request $request)
+    {
+        try {
+            $this->validate($request, [
+                'email' => 'required|email|max:255',
+                'password' => 'required',
+                'fname' => 'required',
+                'lname' => 'required',
+            ]);
+        } catch (HttpResponseException $e) {
+            return $this->onBadRequest();
+        }
+
+        $user = new User();
+
+        $user->password = Hash::make($request->password);
+        $user->email = $request->email;
+        $user->fname = $request->fname;
+        $user->lname = $request->lname;
+
+
+        if(!$user->save()) {
+            throw new HttpException(500);
+        }
+
+        try {
+            // Attempt to verify the credentials and create a token for the user
+            if (!$token = JWTAuth::attempt(
+                $this->getCredentials($request)
+            )) {
+                return $this->onUnauthorized();
+            }
+        } catch (JWTException $e) {
+            // Something went wrong whilst attempting to encode the token
+            return $this->onJwtGenerationError();
+        }
+
+        // All good so return the token
+        return $this->onAuthorized($token);
+    }
+
 
     /**
      * Validate authentication request.
@@ -166,4 +214,5 @@ class AuthController extends Controller
             'data' => JWTAuth::parseToken()->authenticate()
         ]);
     }
+
 }
